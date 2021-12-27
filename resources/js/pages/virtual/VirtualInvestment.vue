@@ -118,7 +118,59 @@
                         </v-dialog>
                     </v-row>
                      <!-- stock form modal for both Adding & Editting -->
-                   
+                   <v-row justify="center">
+                        <v-dialog
+                            v-model="fundingDialogue"
+                            persistent
+                            max-width="600px"
+                        >
+                            <v-card>
+                                <v-card-title>
+                                    <span class="text-h5">Fund {{fundingDetails.username}} Wallet</span>
+                                    <v-spacer></v-spacer>
+                                </v-card-title>
+                                <v-card-text>
+                                    <v-container>
+                                           <v-row>
+                                            <v-col cols="12">
+                                                <v-text-field
+                                                label="amount*"
+                                                type="text"
+                                                v-model="fundingDetails.wallet_balance"
+                                                required
+                                                ></v-text-field>
+                                            </v-col>
+                                        </v-row>
+                                    
+                                    </v-container>
+                                </v-card-text>
+                                <v-card-actions v-if="formButtonControl">
+                                    <v-spacer></v-spacer>
+                                    <v-btn
+                                        color="blue darken-1"
+                                        text
+                                        @click="fundingDialogue=false"
+                                    >
+                                        Close
+                                    </v-btn>
+                                    <v-btn
+                                        color="blue darken-1"
+                                        text
+                                        @click="fundClientWallet"
+                                    >
+                                        Fund wallet
+                                    </v-btn>
+                                </v-card-actions>
+                                <v-card-actions v-else>
+                                    <v-spacer></v-spacer>
+                                     <v-progress-circular
+                                        indeterminate
+                                        size="30">
+                                     </v-progress-circular>
+                                </v-card-actions>
+                            </v-card>
+                        </v-dialog>
+                    </v-row>
                  
                 </div>
             </div>
@@ -136,6 +188,7 @@ export default {
         return {
             loading:false,
             dialog: false,
+            fundingDialogue: false,
             delDialog: false,
             search: '',
             formButtonControl: true,
@@ -160,7 +213,7 @@ export default {
             client : {
                 username : '',
             },
-            
+            fundingDetails : ''
       }
     },
     created () {
@@ -174,7 +227,13 @@ export default {
                 username : '',
             }
         },
-      
+        fundClientWalletForm(client) {
+            this.fundingDialogue =  true
+            this.fundingDetails = client
+        },
+        async fundClientWallet(){
+
+        },
         async addNewClient() {
             this.loading = true
             this.formButtonControl = false
